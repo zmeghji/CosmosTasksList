@@ -26,6 +26,15 @@ namespace CosmosTasksList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("cors",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200"//angular client
+                                        );
+                });
+            });
             services.AddControllers();
             services.AddScoped(typeof(ITaskListApiService), typeof(TaskListApiService));
         }
@@ -39,7 +48,7 @@ namespace CosmosTasksList
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("cors");
             app.UseRouting();
 
             app.UseAuthorization();

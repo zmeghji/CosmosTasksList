@@ -11,6 +11,6 @@ namespace CosmosTasksListData.Models
         public string Id { get; set; }
         public DateTime Date { get; set;}
         public int ProfileId { get; set; }
-        public List<string> Tasks { get; set; }
+        public List<Task> Tasks { get; set; }
     }
 }

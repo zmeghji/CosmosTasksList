@@ -1,5 +1,6 @@
 ﻿using CosmosTasksListData.Models;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace CosmosTasksListData.Repositories
     {
         Task<TaskList> Create(TaskList taskList);
         Task<List<TaskList>> Get();
+        Task<TaskList> Get(int profileId, DateTime date);
     }
     public class TaskListRepository : ITaskListRepository
     {
@@ -45,6 +47,20 @@ namespace CosmosTasksListData.Repositories
                 var container = client.GetContainer(_cosmosDatabaseId, _cosmosContainerId);
                 var feed =await container.GetItemQueryIterator<TaskList>("select * from c").ReadNextAsync();
                 return feed.ToList();
+            }
+        }
+
+        public async Task<TaskList> Get(int profileId, DateTime date)
+        {
+            using (var client = new CosmosClient(_cosmosServiceUri, _cosmosAuthKey))
+            {
+                var container = client.GetContainer(_cosmosDatabaseId, _cosmosContainerId);
+                var feed = await container.GetItemLinqQueryable<TaskList>()
+                    .Where(t => t.ProfileId == profileId && t.Date == date)
+                    .ToFeedIterator()
+                    .ReadNextAsync();
+                    
+                return feed.FirstOrDefault();
             }
         }
     }

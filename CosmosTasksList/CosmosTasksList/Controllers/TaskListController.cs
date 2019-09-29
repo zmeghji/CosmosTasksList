@@ -24,6 +24,13 @@ namespace CosmosTasksList.Controllers
         }
 
         [HttpGet]
+        [Route("/profile/{profileId}/tasklist/{date}")]
+        public async Task<TaskList> Get(int profileId, DateTime date)
+        {
+            return await _taskListApiService.Get(profileId, date);
+        }
+
+        [HttpGet]
         public async Task<List<TaskList>> Get()
         {
             return await _taskListApiService.Get();

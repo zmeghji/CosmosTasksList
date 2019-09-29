@@ -1,0 +1,13 @@
+<section class="container">
+<h1>Task List Application</h1>
+<input [matDatepicker]="myDatepicker">
+<mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+<mat-datepicker #myDatepicker></mat-datepicker>
+
+
+<mat-list *ngFor='let task of taskList.tasks'>
+    <mat-list-item> 
+        {{task.name}} <input type="checkbox">
+    </mat-list-item>
+</mat-list>
+</section>
