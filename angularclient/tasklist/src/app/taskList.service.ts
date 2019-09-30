@@ -10,13 +10,7 @@ export class TaskListService{
     constructor(httpClient: HttpClient){
         this._httpClient = httpClient;
     }
-    getTaskList():Observable<TaskList>{
-        // var taskList = new TaskList();
-        // taskList.ProfileId = 1;
-        // return taskList;
-        return this._httpClient.get<TaskList>("https://localhost:44335/profile/1/tasklist/2019-09-25T00:00:00");
+    getTaskList(date: Date):Observable<TaskList>{
+        return this._httpClient.get<TaskList>("https://localhost:44335/profile/1/tasklist/"+ date.toISOString());
     }
-    // getTaskList():Observable<TaskList>{
-        
-    // }
 }

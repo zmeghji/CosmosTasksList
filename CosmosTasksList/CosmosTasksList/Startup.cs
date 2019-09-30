@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CosmosTasksList.Exceptions;
 using CosmosTasksList.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,9 @@ namespace CosmosTasksList
                                         );
                 });
             });
-            services.AddControllers();
+            services.AddControllers(options=> {
+                options.Filters.Add(new ApiExceptionFilterAttribute());
+            });
             services.AddScoped(typeof(ITaskListApiService), typeof(TaskListApiService));
         }
 

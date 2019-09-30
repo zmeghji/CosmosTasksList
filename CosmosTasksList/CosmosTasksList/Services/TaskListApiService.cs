@@ -1,4 +1,5 @@
-﻿using CosmosTasksListData.Models;
+﻿using CosmosTasksList.Exceptions;
+using CosmosTasksListData.Models;
 using CosmosTasksListData.Repositories;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -38,9 +39,14 @@ namespace CosmosTasksList.Services
             return await _taskListRepository.Get();
         }
 
-        public Task<TaskList> Get(int profileId, DateTime date)
+        public async Task<TaskList> Get(int profileId, DateTime date)
         {
-            return _taskListRepository.Get(profileId, date);
+            var taskList= await _taskListRepository.Get(profileId, date);
+            if (taskList == null)
+            {
+                throw new ApiException("Task List Not Found", 404);
+            }
+            return taskList;
         }
     }
 }
