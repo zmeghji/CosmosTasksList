@@ -9,22 +9,29 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(taskListService : TaskListService){
-    this.date =  new FormControl(new Date())
-    this._taskListService = taskListService;
-    this._taskListService.getTaskList(new Date()).subscribe(
+  private _setTaskList(date: Date){
+    this.taskList = null;
+    this._taskListService.getTaskList(date).subscribe(
       taskList=>{
         this.taskList = taskList;
+      },
+      error => {
+        if (error.status ==404){
+          this._taskListService.createTaskList(date).subscribe(
+            taskList => {this.taskList = taskList;}
+          );
+        // console.log(error);
+        }
       }
     );
   }
+  constructor(taskListService : TaskListService){
+    this.date =  new FormControl(new Date())
+    this._taskListService = taskListService;
+    this._setTaskList(new Date());
+  }
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    this._taskListService.getTaskList(event.value).subscribe(
-      taskList=>{
-        this.taskList = taskList;
-      }
-    );
-    console.log("change event caught");
+    this._setTaskList(event.value);
   }
   private _taskListService : TaskListService;
   taskList:TaskList;

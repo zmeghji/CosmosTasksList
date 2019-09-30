@@ -2,17 +2,22 @@
 <h1>Task List Application</h1>
 
 <mat-form-field>
-        <input matInput [matDatepicker]="picker1" placeholder="Select Date" 
-        [formControl]="date"
-        (dateInput)="addEvent('input', $event)" 
-        (dateChange)="addEvent('change', $event)"
-        >
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-<mat-list  *ngFor='let task of taskList.tasks'>
-    <mat-list-item> 
-        {{task.name}} 
-    </mat-list-item>
-</mat-list>
+    <input matInput [matDatepicker]="picker1" placeholder="Select Date" 
+    [formControl]="date"
+    (dateInput)="addEvent('input', $event)" 
+    (dateChange)="addEvent('change', $event)"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+<ng-template [ngIf]="taskList">
+    <mat-list  *ngFor='let task of taskList.tasks'>
+        <mat-list-item> 
+            {{task.name}} 
+        </mat-list-item>
+    </mat-list>
+</ng-template>
+<ng-template [ngIf]="! taskList"> 
+    <mat-spinner></mat-spinner>
+</ng-template>
 </section>

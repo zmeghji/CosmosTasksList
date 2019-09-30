@@ -36,9 +36,12 @@ namespace CosmosTasksList.Controllers
         {
             return await _taskListApiService.Get();
         }
+
         [HttpPost]
-        public async Task<TaskList> Post(TaskList taskList)
+        [Route("/profile/{profileId}/tasklist")]
+        public async Task<TaskList> Post( int profileId, TaskList taskList)
         {
+            taskList.ProfileId = profileId;
             return await _taskListApiService.Create(taskList);
         }
     }

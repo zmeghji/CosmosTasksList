@@ -33,7 +33,7 @@ namespace CosmosTasksList
                 builder =>
                 {
                     builder.WithOrigins("http://localhost:4200"//angular client
-                                        );
+                                        ).AllowAnyHeader().AllowAnyMethod();
                 });
             });
             services.AddControllers(options=> {
