@@ -11,11 +11,17 @@
     <mat-datepicker #picker1></mat-datepicker>
 </mat-form-field>
 <ng-template [ngIf]="taskList">
-    <mat-list  *ngFor='let task of taskList.tasks'>
-        <mat-list-item> 
+    <mat-list  >
+        <mat-list-item *ngFor='let task of taskList.tasks ; let i = index'> 
             {{task.name}} 
+            <mat-icon (click)=removeTask(i)>remove_circle_outline</mat-icon>
         </mat-list-item>
     </mat-list>
+    <mat-divider></mat-divider>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="New Task Name" [formControl]="newTaskName">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addTask()">Add Task</button>
 </ng-template>
 <ng-template [ngIf]="! taskList"> 
     <mat-spinner></mat-spinner>

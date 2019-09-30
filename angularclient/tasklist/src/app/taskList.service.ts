@@ -13,11 +13,19 @@ export class TaskListService{
     getTaskList(date: Date):Observable<TaskList>{
         return this._httpClient.get<TaskList>("https://localhost:44335/profile/1/tasklist/"+ date.toISOString());
     }
+    updateTaskList(taskList: TaskList){
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+        return this._httpClient.put<TaskList>("https://localhost:44335/profile/1/tasklist/"+ taskList.date,
+        taskList,httpOptions)
+    }
     createTaskList(date: Date):Observable<TaskList>{
         var taskList = new TaskList();
         taskList.profileId = 1;
-        var now = new Date();
-        taskList.date = new Date(now.getFullYear(),now.getMonth(),now.getDay())
+        taskList.date = new Date(date.getFullYear(),date.getMonth(),date.getDay()).toISOString();
         taskList.tasks = [];
         const httpOptions = {
             headers: new HttpHeaders({

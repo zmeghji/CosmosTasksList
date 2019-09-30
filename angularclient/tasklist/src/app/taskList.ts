@@ -1,6 +1,6 @@
 export class TaskList{
     profileId: number;
-    date: Date;
+    date: string;
     tasks: Task[];
 }
 export class Task{

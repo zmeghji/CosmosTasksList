@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent
@@ -29,9 +31,17 @@ import {MatProgressSpinnerModule} from '@angular/material';
     ReactiveFormsModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  // constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer){
+  //   iconRegistry.addSvgIcon(
+  //     'thumbs-up',
+  //     sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
+  // }
+ }

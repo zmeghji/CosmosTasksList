@@ -28,7 +28,7 @@ namespace CosmosTasksList.Controllers
         public async Task<TaskList> Update(int profileId, DateTime date, TaskList taskList)
         {
             taskList.ProfileId = profileId;
-            taskList.Date = date;
+            taskList.Date = new DateTime(date.Year, date.Month, date.Day);
             return await _taskListApiService.Update(profileId, date, taskList);
         }
         [HttpGet]
@@ -50,7 +50,7 @@ namespace CosmosTasksList.Controllers
         public async Task<TaskList> Post( int profileId, DateTime date, TaskList taskList)
         {
             taskList.ProfileId = profileId;
-            taskList.Date = date;
+            taskList.Date = new DateTime(date.Year, date.Month, date.Day);
             return await _taskListApiService.Create(taskList);
         }
     }
