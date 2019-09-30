@@ -14,6 +14,7 @@ namespace CosmosTasksListData.Repositories
         Task<TaskList> Create(TaskList taskList);
         Task<List<TaskList>> Get();
         Task<TaskList> Get(int profileId, DateTime date);
+        Task<TaskList> Update(int profileId, DateTime date, TaskList taskList);
     }
     public class TaskListRepository : ITaskListRepository
     {
@@ -61,6 +62,16 @@ namespace CosmosTasksListData.Repositories
                     .ReadNextAsync();
                     
                 return feed.FirstOrDefault();
+            }
+        }
+
+        public async Task<TaskList> Update(int profileId, DateTime date, TaskList taskList)
+        {
+            var taskListFromDb = await Get(profileId, date);
+            using (var client = new CosmosClient(_cosmosServiceUri, _cosmosAuthKey))
+            {
+                var container =  client.GetContainer(_cosmosDatabaseId, _cosmosContainerId);
+                return await container.ReplaceItemAsync<TaskList>(taskList, taskListFromDb.Id);
             }
         }
     }

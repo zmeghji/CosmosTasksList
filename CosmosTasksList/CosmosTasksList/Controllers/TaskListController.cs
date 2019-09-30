@@ -23,6 +23,14 @@ namespace CosmosTasksList.Controllers
             _taskListApiService = taskListApiService;
         }
 
+        [HttpPut]
+        [Route("/profile/{profileId}/tasklist/{date}")]
+        public async Task<TaskList> Update(int profileId, DateTime date, TaskList taskList)
+        {
+            taskList.ProfileId = profileId;
+            taskList.Date = date;
+            return await _taskListApiService.Update(profileId, date, taskList);
+        }
         [HttpGet]
         [Route("/profile/{profileId}/tasklist/{date}")]
         public async Task<TaskList> Get(int profileId, DateTime date)
@@ -38,10 +46,11 @@ namespace CosmosTasksList.Controllers
         }
 
         [HttpPost]
-        [Route("/profile/{profileId}/tasklist")]
-        public async Task<TaskList> Post( int profileId, TaskList taskList)
+        [Route("/profile/{profileId}/tasklist/{date}")]
+        public async Task<TaskList> Post( int profileId, DateTime date, TaskList taskList)
         {
             taskList.ProfileId = profileId;
+            taskList.Date = date;
             return await _taskListApiService.Create(taskList);
         }
     }

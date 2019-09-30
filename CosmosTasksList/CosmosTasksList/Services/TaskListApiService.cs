@@ -14,6 +14,7 @@ namespace CosmosTasksList.Services
         Task<TaskList> Create(TaskList taskList);
         Task<List<TaskList>> Get();
         Task<TaskList> Get(int profileId, DateTime date);
+        Task<TaskList> Update(int profileId, DateTime date, TaskList taskList);
     }
     public class TaskListApiService : ITaskListApiService
     {
@@ -47,6 +48,16 @@ namespace CosmosTasksList.Services
                 throw new ApiException("Task List Not Found", 404);
             }
             return taskList;
+        }
+
+        public async Task<TaskList> Update(int profileId, DateTime date, TaskList taskList)
+        {
+            var taskListFromDb = await _taskListRepository.Get(profileId, date);
+            if (taskListFromDb == null)
+            {
+                throw new ApiException("Task List Not Found", 404);
+            }
+            return await _taskListRepository.Update(profileId, date, taskList);
         }
     }
 }
